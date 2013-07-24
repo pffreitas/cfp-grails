@@ -36,4 +36,11 @@ public interface CrudRepository<T, ID extends Serializable> {
 	 * Deletes all entities managed by the repository.
 	 */
 	void deleteAll();
+	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	<S extends T> S findOne(Serializable id);
 }

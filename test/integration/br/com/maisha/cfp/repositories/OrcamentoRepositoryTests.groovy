@@ -23,16 +23,13 @@ import br.com.maisha.cfp.test.DataGenerator
 class OrcamentoRepositoryTests {
 
 	/** Objeto sob teste. */
-	def OrcamentoRepository repo
+	def OrcamentoRepository orcamentoRepository
 
 	/** Gerador de massa de dados. */
 	def DataGenerator dataGenerator
 
 	@Before
 	def void before(){
-		dataGenerator = BeanContextAware.get().getBean("dataGenerator")
-		repo = BeanContextAware.get().getBean("orcamentoRepository")
-
 		dataGenerator.generateData()
 		
 		Orcamento o = new Orcamento()
@@ -43,13 +40,12 @@ class OrcamentoRepositoryTests {
 			mesBase = MesBase.getMesBase(1)
 			tipo = Orcamento.Tipo.SAIDA
 		}
-		repo.save(o)
+		orcamentoRepository.save(o)
 	}
 
 	@After
 	def void after(){
 		dataGenerator.dumpData()
-		repo = null
 	}
 
 	/**
@@ -70,7 +66,7 @@ class OrcamentoRepositoryTests {
 			tipo = Orcamento.Tipo.ENTRADA
 		}
 
-		def saved = repo.save(o)
+		def saved = orcamentoRepository.save(o)
 		
 
 		assertNotNull saved
@@ -86,7 +82,7 @@ class OrcamentoRepositoryTests {
 	 */
 	@Test
 	def void test2(){
-		def lst = repo.findByNome("Carro")
+		def lst = orcamentoRepository.findByNome("Carro")
 		assertNotNull lst
 		assertFalse lst.isEmpty()
 	}
@@ -116,7 +112,7 @@ class OrcamentoRepositoryTests {
 			addToCategorias(c1)
 		}
 
-		def saved = repo.save(o)
+		def saved = orcamentoRepository.save(o)
 
 		assertNotNull saved
 		assertNotNull saved.id
@@ -140,7 +136,7 @@ class OrcamentoRepositoryTests {
 	 */
 	@Test
 	def void test4(){
-		def o1 = repo.findByNome("Orcamento 1")[0]
+		def o1 = orcamentoRepository.findByNome("Orcamento 1")[0]
 		
 		//Cria um novo orcamento baseado em o1
 		def oNew = new Orcamento(o1)
@@ -154,12 +150,12 @@ class OrcamentoRepositoryTests {
 		assertNull oNew.categorias.first().subcategorias.first().id
 		
 		//persistencia
-		repo.save(oNew)
+		orcamentoRepository.save(oNew)
 
 		//IDs nao esto mais null
-		oNew = repo.findByNome("NEW ORCAMENTO")[0]
+		oNew = orcamentoRepository.findByNome("NEW ORCAMENTO")[0]
 		assertNotNull oNew.id
-		assertNotEquals oNew.id, o1.id
+		assertFalse oNew.id == o1.id
 
 		assertEquals "Categoria 1000", oNew.categorias.first().nome
 		assertNotNull oNew.categorias.first().id

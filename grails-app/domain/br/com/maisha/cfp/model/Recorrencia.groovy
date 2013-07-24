@@ -11,10 +11,10 @@ class Recorrencia {
 		MENSAL
 	}
 
-	def SubCategoria subcategoria
 	def Granularidade granularidade
 	def Integer vencimento
-
+	static belongsTo = [subcategoria: SubCategoria]
+	
 
 	def Recorrencia(){
 	}

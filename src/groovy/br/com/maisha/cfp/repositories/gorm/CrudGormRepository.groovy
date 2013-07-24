@@ -1,5 +1,7 @@
 package br.com.maisha.cfp.repositories.gorm
 
+import java.io.Serializable;
+
 import br.com.maisha.cfp.repositories.CrudRepository
 
 class CrudGormRepository<T, ID extends Serializable> implements CrudRepository<T, ID>{
@@ -17,7 +19,6 @@ class CrudGormRepository<T, ID extends Serializable> implements CrudRepository<T
 	 */
 	def <S extends T> S save(S entity) {
 		entity.save(flush: true)
-		println entity.errors
 	}
 
 	/**
@@ -45,5 +46,13 @@ class CrudGormRepository<T, ID extends Serializable> implements CrudRepository<T
 	 */
 	public void deleteAll() {
 		delete(type.list())
+	}
+	
+	/**
+	 * 
+	 * @see br.com.maisha.cfp.repositories.CrudRepository#findOne(java.io.Serializable)
+	 */
+	public <S extends T> S findOne(Serializable id) {
+		return type.load(id);
 	}
 }

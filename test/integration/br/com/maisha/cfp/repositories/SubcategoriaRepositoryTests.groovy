@@ -20,26 +20,21 @@ import br.com.maisha.cfp.test.DataGenerator
 class SubcategoriaRepositoryTests {
 
 	/** Objeto sob teste. */
-	def SubcategoriaRepository repo
+	def SubcategoriaRepository subcategoriaRepository
 
-	def CategoriaRepository categoriaRepo
+	def CategoriaRepository categoriaRepository
 
 	/** Gerador de massa de dados. */
 	def DataGenerator dataGenerator
 
 	@Before
 	def void before(){
-		dataGenerator = BeanContextAware.get().getBean("dataGenerator")
-		repo = BeanContextAware.get().getBean("subcategoriaRepository")
-		categoriaRepo = BeanContextAware.get().getBean("categoriaRepository")
-
 		dataGenerator.generateData()
 	}
 
 	@After
 	def void after(){
 		dataGenerator.dumpData()
-		repo = null
 	}
 
 	/**
@@ -52,7 +47,7 @@ class SubcategoriaRepositoryTests {
 	 */
 	@Test
 	def void test1(){
-		def SubCategoria sc1 = repo.findByNome("Subcategoria 10000").first()
+		def SubCategoria sc1 = subcategoriaRepository.findByNome("Subcategoria 10000").first()
 
 		SubCategoria scNew = new SubCategoria(sc1)
 		assertNull scNew.id
@@ -60,15 +55,15 @@ class SubcategoriaRepositoryTests {
 		assertEquals sc1.valor, scNew.valor
 		assertEquals sc1.gerarAlerta, scNew.gerarAlerta
 		assertNull scNew.categoria
-		assertTrue scNew.lancamentos.isEmpty()
+		assertTrue scNew.lancamentos == null
 
 		// associa uma categoria para poder gravar..
 		scNew.categoria = sc1.categoria
 
-		def saved = repo.save(scNew)
+		def saved = subcategoriaRepository.save(scNew)
 
 		assertNotNull saved.id
-		assertNotEquals saved.id, sc1.id
+		assertFalse saved.id == sc1.id
 	}
 
 	/**
@@ -81,7 +76,7 @@ class SubcategoriaRepositoryTests {
 	 */
 	@Test
 	def void test2(){
-		def SubCategoria sc1 = repo.findByNome("Subcategoria Mensal").first()
+		def SubCategoria sc1 = subcategoriaRepository.findByNome("Subcategoria Mensal").first()
 
 		SubCategoria scNew = new SubCategoria(sc1)
 		assertNull scNew.id
@@ -89,16 +84,16 @@ class SubcategoriaRepositoryTests {
 		assertEquals sc1.valor, scNew.valor
 		assertEquals sc1.gerarAlerta, scNew.gerarAlerta
 		assertNull scNew.categoria
-		assertTrue scNew.lancamentos.isEmpty()
+		assertTrue scNew.lancamentos == null
 
 		assertNotNull scNew.recorrencia
 
 		// associa uma categoria para poder gravar..
 		scNew.categoria = sc1.categoria
 
-		def saved = repo.save(scNew)
+		def saved = subcategoriaRepository.save(scNew)
 
 		assertNotNull saved.id
-		assertNotEquals saved.id, sc1.id
+		assertFalse saved.id == sc1.id
 	}
 }

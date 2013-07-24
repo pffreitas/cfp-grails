@@ -65,9 +65,6 @@ class DataGenerator {
 				orcamentoRepository.save(o)
 			}
 			
-			Orcamento.findAll().each{
-				println ">>>> o cats" + it.categorias
-			}
 		}
 
 		SubCategoria scRecorenteMensal = new SubCategoria()

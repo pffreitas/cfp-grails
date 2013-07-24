@@ -20,23 +20,19 @@ import br.com.maisha.cfp.test.DataGenerator
 class CategoriaRepositoryTests {
 
 	/** Objeto sob teste. */
-	def CategoriaRepository repo
+	def CategoriaRepository categoriaRepository
 
 	/** Gerador de massa de dados. */
 	def DataGenerator dataGenerator
 
 	@Before
 	def void before(){
-		dataGenerator = BeanContextAware.get().getBean("dataGenerator")
-		repo = BeanContextAware.get().getBean("categoriaRepository")
-
 		dataGenerator.generateData()
 	}
 
 	@After
 	def void after(){
 		dataGenerator.dumpData()
-		repo = null
 	}
 
 	/**
@@ -49,7 +45,7 @@ class CategoriaRepositoryTests {
 	 */
 	@Test
 	def void test1(){
-		def Categoria c1 = repo.findByNome("Categoria 1000").first()
+		def Categoria c1 = categoriaRepository.findByNome("Categoria 1000").first()
 
 		Categoria cNew = new Categoria(c1)
 		assertNull cNew.id
@@ -60,9 +56,9 @@ class CategoriaRepositoryTests {
 		// associa um orcamento para poder gravar..
 		cNew.orcamento = c1.orcamento
 		
-		def saved = repo.save(cNew)
+		def saved = categoriaRepository.save(cNew)
 
 		assertNotNull saved.id
-		assertNotEquals saved.id, c1.id
+		assertFalse saved.id == c1.id
 	}
 }

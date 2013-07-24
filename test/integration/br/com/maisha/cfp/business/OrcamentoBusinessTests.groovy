@@ -22,7 +22,7 @@ import br.com.maisha.cfp.test.DataGenerator
 class OrcamentoBusinessTests {
 
 	/** Repositorio de orcamento. */
-	def OrcamentoBusiness bean
+	def OrcamentoBusiness orcamentoBusiness
 
 	/** Repositorio de orcamentos */
 	def OrcamentoRepository orcamentoRepository
@@ -32,7 +32,6 @@ class OrcamentoBusinessTests {
 
 	@Before
 	def void before(){
-		println ">>>>>> $orcamentoRepository, $dataGenerator"
 		dataGenerator.generateData()
 	}
 
@@ -59,7 +58,7 @@ class OrcamentoBusinessTests {
 			tipo = Tipo.SAIDA
 		}
 
-		def saved = bean.criarOrcamento(o)
+		def saved = orcamentoBusiness.criarOrcamento(o)
 
 		assertNotNull saved
 		assertNotNull saved.id
@@ -81,7 +80,7 @@ class OrcamentoBusinessTests {
 		def Orcamento oCorrente = orcamentoRepository.findByNomeAndFase(oName, Fase.CORRENTE).first()
 		def Long oPlanejadoId = oCorrente.planejado.id
 
-		bean.fecharOrcamento(oCorrente, true)
+		orcamentoBusiness.fecharOrcamento(oCorrente, true)
 
 		// verifica o estado do orcamento corrente que passou a ser fechado.
 		assertEquals Fase.FECHADO, oCorrente.fase
@@ -115,7 +114,7 @@ class OrcamentoBusinessTests {
 		def Orcamento oCorrente = orcamentoRepository.findByNomeAndFase(oName, Fase.CORRENTE).first()
 		def Long oPlanejadoId = oCorrente.planejado.id
 
-		bean.fecharOrcamento(oCorrente, false)
+		orcamentoBusiness.fecharOrcamento(oCorrente, false)
 
 		// verifica o estado do orcamento corrente que passou a ser fechado.
 		assertEquals Fase.FECHADO, oCorrente.fase
@@ -138,7 +137,7 @@ class OrcamentoBusinessTests {
 	 */
 	@Test(expected = IllegalStateException)
 	def void test4(){
-		bean.abrirOrcamento(new Orcamento(fase: Fase.FECHADO))
+		orcamentoBusiness.abrirOrcamento(new Orcamento(fase: Fase.FECHADO))
 	}
 
 	/**
@@ -150,7 +149,7 @@ class OrcamentoBusinessTests {
 	 */
 	@Test(expected = IllegalStateException)
 	def void test5(){
-		bean.fecharOrcamento(new Orcamento(fase: Fase.FECHADO))
+		orcamentoBusiness.fecharOrcamento(new Orcamento(fase: Fase.FECHADO))
 	}
 
 	/**
@@ -164,7 +163,7 @@ class OrcamentoBusinessTests {
 	def void test6(){
 		def Orcamento oPlanejado = orcamentoRepository.findByNomeAndFase("Orcamento Paulo Freitas", Fase.PLANEJADO).first()
 
-		bean.abrirOrcamento(oPlanejado)
+		orcamentoBusiness.abrirOrcamento(oPlanejado)
 
 		assertEquals Fase.CORRENTE, oPlanejado.fase
 		assertEquals MesBase.getMesBase(Calendar.getInstance().get(Calendar.MONTH) + 1), oPlanejado.mesBase

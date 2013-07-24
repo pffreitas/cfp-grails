@@ -20,7 +20,6 @@ class CategoriaGormRepository extends CrudGormRepository<Categoria, Long> implem
 	 * @see br.com.maisha.cfp.repositories.CategoriaRepository#findByNome(java.lang.String)
 	 */
 	public List<Categoria> findByNome(String nome) {
-		println ">>>>> $nome" + Categoria.list()
 		Categoria.findAllByNome(nome)
 	}
 

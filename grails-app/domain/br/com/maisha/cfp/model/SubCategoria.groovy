@@ -12,6 +12,10 @@ class SubCategoria {
 	static belongsTo = [categoria: Categoria]
 	static hasMany = [lancamentos: Lancamento]
 
+	static constraints = {
+		recorrencia nullable: true 
+	}
+	
 	def static enum TipoSubcategoria {
 		EVENTUAL, RECORRENTE
 	}

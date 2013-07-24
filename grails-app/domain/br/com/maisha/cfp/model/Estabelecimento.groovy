@@ -10,4 +10,8 @@ class Estabelecimento {
 	def String latitude
 	def String longitude
 	
+	static constraints = {
+		latitude nullable: true
+		longitude nullable: true
+	}
 }
