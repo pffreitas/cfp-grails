@@ -1,0 +1,40 @@
+#page-header * {
+	display: inline;
+}
+
+
+#page-header  h1 {
+	color: #5a6066;
+	line-height: 1em;
+	font-size: 2.5em;
+	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.5);
+}
+
+#page-header .toolbar {
+	list-style-type: none;
+}
+
+#page-header .toolbar a {
+	text-decoration: none;
+}
+
+.shadowed {
+	font-size: 3em;
+	font-weight: bold;
+	padding-left: 10px;
+	font-family: arial, sans-serif;
+}
+
+a.darkAgain {
+	color: #000000;
+	position: relative;
+}
+
+.darkAgain:before {
+	content: attr(title);
+	position: absolute;
+	color: rgba(255, 255, 255, 0.2);
+	top: 1px;
+	left: 1px;
+	padding-left: 10px;
+}
