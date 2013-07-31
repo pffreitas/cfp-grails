@@ -38,7 +38,10 @@ class Orcamento {
 	def Set categorias
 	
 	static hasMany = [categorias : Categoria]
-
+	static constraints = {
+		nome blank:false, nullable: false
+	}
+	
 	def Orcamento(){
 	}
 

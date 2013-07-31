@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<meta name="layout" content="main" />
-		<r:require module="m-toolbar"/>
+		<r:require module="m-planejamento"/>
 	</head>
 
 	<body>
@@ -10,11 +10,17 @@
 			
 			<ul class="toolbar">
 				<li>
-					<a href="#" class="shadowed darkAgain" title="+">+</a>
+					<a data-toggle="modal" href="#novoOrcamentoModal" class="shadowed dark" title="+">+</a>
 				</li>
 			</ul>
 		</div>
 		
+		
+		<g:render template="novoOrcamento" />
+		
+		<r:script>
+			window.planejamentoController = new PlanejamentoController(); 
+		</r:script>
 	</body>
 
 </html>

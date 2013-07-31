@@ -23,18 +23,16 @@
 	font-weight: bold;
 	padding-left: 10px;
 	font-family: arial, sans-serif;
-}
-
-a.darkAgain {
-	color: #000000;
 	position: relative;
 }
 
-.darkAgain:before {
+
+.shadowed:before {
 	content: attr(title);
 	position: absolute;
 	color: rgba(255, 255, 255, 0.2);
 	top: 1px;
 	left: 1px;
 	padding-left: 10px;
+	line-height: normal;
 }
